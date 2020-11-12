@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div align="center">
+    <h1>Cart List</h1>
+    <a href="/logout">Logout</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>Назва</th>
+            <th>Кількість</th>
+            <th>Ціна</th>
+            <th>Видалити</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cart : ${cart}">
+            <td th:text="${cart.producer}">Продукт</td>
+            <td th:text="${cart.name}">Назва</td>
+            <td th:text="${cart.quantity}">Кількість</td>
+            <td th:text="${cart.price}">Ціна</td>
+            <td>
+                <a th:href="@{'/cart/delete/' + ${cart.id}}">Видалити</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <tr><a th:href="@{/cart/finalize}">Завершити</a></tr>
+</div>
+</body>
+</html>

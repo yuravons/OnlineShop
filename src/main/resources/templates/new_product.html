@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Створення нового продукту</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Магазин</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Головна сторінка<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Кошик</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/panel">Панель адміна</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Вийти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <h1>Новий продукт</h1>
+        <form action="#" th:action="@{/product/save}" th:object="${product}" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Виробник</label>
+                <input th:field="*{producer}" type="text" class="form-control" name="producer" autofocus="autofocus" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Виробник">
+                <div style="color: red" th:if="${#fields.hasErrors('producer')}"
+                     th:errors="*{producer}"></div></td>
+                <div style="color: red" th:if="${accountExist == true}">
+                    Вже існує
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Назва</label>
+                <input type="text" class="form-control" name="name" id="exampleInputPassword1" th:field="*{name}" placeholder="Назва">
+                <div style="color: red" th:if="${#fields.hasErrors('name')}"
+                     th:errors="*{name}"></div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword2">Ціна</label>
+                <input type="text" class="form-control" name="price" th:field="*{price}" id="exampleInputPassword2" placeholder="Ціна">
+                <div style="color: red" th:if="${#fields.hasErrors('price')}"
+                     th:errors="*{price}"></div>
+            </div>
+                <div style="color: red" th:if="${wrongPass == true}">
+                    Паролі повинні бути однакові
+                </div>
+
+        <div class="form-group">
+            <label for="select">Категорія</label>
+            <select th:field="*{category}" id="select">
+                <option th:value="'PHONE'" th:text="PHONE">Телефони</option>
+                <option th:value="'LAPTOP'" th:text="LAPTOP">Комп'ютери</option>
+            </select>
+
+
+</div>
+            <div class="form-group">
+                <label for="imageSource">Посилання</label>
+                <input type="text" class="form-control" name="imageSource" id="imageSource" th:field="*{imageSource}" placeholder="Посилання на зображення">
+                <div style="color: red" th:if="${#fields.hasErrors('imageSource')}"
+                     th:errors="*{imageSource}"></div>
+            </div>
+            <div class="form-group">
+                <label for="stock">Кількість доступних товарів</label>
+                <input type="text" class="form-control" name="imageSource" id="stock" th:field="*{stock}" placeholder="Кількість доступних товарів">
+                <div style="color: red" th:if="${#fields.hasErrors('stock')}"
+                     th:errors="*{stock}"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Додати</button>
+        </form>
+    </div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

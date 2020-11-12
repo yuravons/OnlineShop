@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Магазин</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Головна<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Кошик</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/panel">Панель адміна</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Вийти</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/search}" method="post" th:object="${product}">
+                <select th:field="*{category}" onchange="this.form.submit()" class="form-control">
+                    <option th:value="ALL">УСЕ</option>
+                    <option th:value="'PHONE'" th:text="PHONE">Телефони</option>
+                    <option th:value="'LAPTOP'" th:text="LAPTOP">Комп'ютери</option>
+                </select>
+                <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            </form>
+        </div>
+    </nav>
+
+
+
+    <div class="card">
+        <a th:href="@{/product/new}">Додати новий продукт</a>
+        <a style="float:right" th:href="@{/panel/orders}">Див. замовлення</a>
+        <h2 style="color:green" th:if="${finalizeDone}==true"> Ви успішно виконали замовлення</h2>
+
+        <div class="card-block">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Зображення</th>
+                    <th>Продукт</th>
+                    <th>Назва</th>
+                    <th>Ціна</th>
+                    <th>Кількість</th>
+                    <th>Дії</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}" th:onclick="'javascript:location.href=\'' + @{'/product/' + ${product.id}} + '\''">
+                    <td> <img th:src="${product.imageSource}" style="height:100px;max-width:100px;width: expression(this.width > 500 ? 500: true);"></td>
+                    <td th:text="${product.producer}">Продукт</td>
+                    <td th:text="${product.name}">Назва</td>
+                    <td th:text="${product.price}">Ціна</td>
+                    <td th:text="${product.stock}">Доступна кількість</td>
+                    <td>
+                        <a th:href="@{'/product/edit/' + ${product.id}}">Редагування</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{'/product/delete/' + ${product.id}}">Видалення</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{'/product/' + ${product.id}}">Дивитись</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <hr/>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

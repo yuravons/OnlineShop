@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Магазин</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Головна<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Кошик</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/panel">Панель адміна</a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Вийти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <h1>Завершення замовлення</h1>
+        <form action="#" th:action="@{/cart/finalize/save}" th:object="${addressandpersonaldata}" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Ім'я</label>
+                <input th:field="*{firstName}" type="text" class="form-control" name="username" autofocus="autofocus" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ім'я">
+                <div style="color: red" th:if="${#fields.hasErrors('firstName')}"
+                     th:errors="*{firstName}"></div></td>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Прізвище</label>
+                <input type="text" class="form-control" name="lastName" id="lastName" th:field="*{lastName}" placeholder="Прізвище">
+                <div style="color: red" th:if="${#fields.hasErrors('lastName')}"
+                     th:errors="*{lastName}"></div>
+            </div>
+            <div class="form-group">
+                <label for="city">Місто</label>
+                <input type="text" class="form-control" name="city" id="city" th:field="*{city}" placeholder="Місто">
+                <div style="color: red" th:if="${#fields.hasErrors('city')}"
+                     th:errors="*{city}"></div>
+            </div>
+            <div class="form-group">
+                <label for="street">Вулиця та номер будинку</label>
+                <input type="text" class="form-control" name="street" id="street" th:field="*{street}" placeholder="Вулиця та номер будинку">
+                <div style="color: red" th:if="${#fields.hasErrors('street')}"
+                     th:errors="*{street}"></div>
+            </div>
+            <div class="form-group">
+                <label for="zipCode">Індекс</label>
+                <input type="text" class="form-control" name="zipCode" id="zipCode" th:field="*{zipCode}" placeholder="Індекс">
+                <div style="color: red" th:if="${#fields.hasErrors('zipCode')}"
+                     th:errors="*{zipCode}"></div>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Номер телефону</label>
+                <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" th:field="*{phoneNumber}" placeholder="Номер телефону">
+                <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}"
+                     th:errors="*{phoneNumber}"></div>
+            </div>
+            <p>Ціна за все: <label th:text="${priceForAll}"></label></p><hr/>
+            <button type="submit" class="btn btn-primary">Завершити</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
