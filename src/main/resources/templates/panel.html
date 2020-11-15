@@ -35,6 +35,12 @@
                 </li>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/contact">Контакти</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/feedback">Відгуки</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">Вийти</a>
                 </li>
             </ul>
@@ -44,7 +50,6 @@
                     <option th:value="'PHONE'" th:text="PHONE">Телефони</option>
                     <option th:value="'LAPTOP'" th:text="LAPTOP">Комп'ютери</option>
                 </select>
-                <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
             </form>
         </div>
     </nav>

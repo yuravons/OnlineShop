@@ -30,8 +30,6 @@ public class CartController {
     @Autowired
     private ItemService itemService;
 
-
-
     @GetMapping("/cart/clear")
     public String clearCart(@RequestParam(name = "page", defaultValue = "0") int page, Model model,Principal principal) {
         model.addAttribute("finalizeDone",true);
@@ -72,20 +70,6 @@ public class CartController {
         orderService.save(order);
 
         return "redirect:/cart/clear";
-    }
-
-
-    @GetMapping("/cart/finalize")
-    public String showFinalizeForm(Model model,Principal principal) {
-        model.addAttribute("addressandpersonaldata",new AddressAndPersonalData());
-        List<Cart> listOfCarts = cartService.findCartById(userService.findByUsername(principal.getName()).getId());
-        Double priceForAll=0.0;
-        for (Cart cart : listOfCarts) {
-            priceForAll+=cart.getPrice();
-        }
-        model.addAttribute("priceForAll",priceForAll);
-
-        return "finalize";
     }
 
     @RequestMapping(value = "/cart/add/{id}",method = RequestMethod.POST)

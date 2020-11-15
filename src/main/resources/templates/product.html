@@ -29,8 +29,14 @@
                     <a class="nav-link" href="/cart">Кошик</a>
                 </li>
                 <li sec:authorize="hasRole('ADMIN')" class="nav-item">
-                    <a class="nav-link" href="/panel"Панель адміністратора</a>
+                    <a class="nav-link" href="/panel">Панель адміністратора</a>
                 </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Контакти</a>
+                </li>
+                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/feedback">Відгуки</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Вийти</a>
