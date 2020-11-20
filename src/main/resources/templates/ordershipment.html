@@ -22,8 +22,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Головна<span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Головна</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Кошик</a>
@@ -31,9 +31,8 @@
                 <li sec:authorize="hasRole('ADMIN')" class="nav-item">
                     <a class="nav-link" href="/panel">Панель адміністратора</a>
                 </li>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ordershipment">Доставка та опплата</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/ordershipment">Доставка та опплата<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Контакти</a>
@@ -48,30 +47,6 @@
 
         </div>
     </nav>
-
-
-    <body>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4"><img th:src="*{product.imageSource}" style="height:250px;max-width:250px;width: expression(this.width > 500 ? 500: true);"></div>
-            <div class="col-sm-8">
-                Виробник:<h3 th:text="*{product.producer}"></h3>
-                Назва: <h3 th:text="*{product.name}"></h3>
-                Доступна кількість:<h3 th:text="*{product.stock}"></h3>
-
-                <form action="#" th:action="@{'/cart/add/' + ${product.id}}" th:object="${cart}"
-                      method="post">
-                    <label>Введіть кількість</label>
-
-                <input type="number" min="1" th:max="${product.stock}" th:field="*{quantity}" />
-                <button type="submit" class="btn btn-primary">Додати до кошика</button>
-
-                <span th:if="${param.error != null}" >Мала кількість продуктів</span>
-        </form>
-            </div>
-        </div>
-    </div>
 
 
 </div>

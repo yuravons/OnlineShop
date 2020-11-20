@@ -2,6 +2,7 @@ package online.patologia.shop.controllers;
 
 import online.patologia.shop.model.*;
 import online.patologia.shop.service.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,14 @@ public class CartController {
     @Autowired
     private ItemService itemService;
 
+    final static Logger logger = Logger.getLogger(CartController.class);
+
     @GetMapping("/cart/clear")
     public String clearCart(@RequestParam(name = "page", defaultValue = "0") int page, Model model,Principal principal) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start clearCart.");
+        }
+
         model.addAttribute("finalizeDone",true);
         model.addAttribute("product",new Product());
         model.addAttribute("products", productService.findAvailable(PageRequest.of(page,5)));
@@ -45,6 +52,10 @@ public class CartController {
 
     @RequestMapping(value = "/cart/finalize/save",method = RequestMethod.POST)
     public String finalizeSave( @ModelAttribute("addressandpersonaldata") @Valid AddressAndPersonalData addressAndPersonalData,BindingResult bindingResult, Principal principal, Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start finalizeSave.");
+        }
+
         List<Cart> listOfCarts = cartService.findCartById(userService.findByUsername(principal.getName()).getId());
         List<Item> listOfItems = new ArrayList<>();
 
@@ -74,6 +85,10 @@ public class CartController {
 
     @RequestMapping(value = "/cart/add/{id}",method = RequestMethod.POST)
     public String addProducts(@ModelAttribute("cart") Cart cart, @PathVariable("id") Long product_id, Principal principal) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start addProducts.");
+        }
+
         Long user_id = userService.findByUsername(principal.getName()).getId();
         Product product = productService.getOne(product_id);
         Cart newCart = new Cart();
@@ -97,6 +112,10 @@ public class CartController {
 
     @GetMapping("/cart")
     public String showCart(Model model,Principal principal) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start showCart.");
+        }
+
         List<CartTest> allProducts = new ArrayList<>();
         Long user_id = userService.findByUsername(principal.getName()).getId();
         cartService.findAll().forEach(i -> {
@@ -113,6 +132,10 @@ public class CartController {
 
     @GetMapping("/cart/delete/{id}")
     public String deleteItemFromCart(@PathVariable("id") Long id, Model model,Principal principal) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start deleteItemFromCart.");
+        }
+
         List<CartTest> allProducts = new ArrayList<>();
         Long user_id = userService.findByUsername(principal.getName()).getId();
         Optional<Cart> cartById = cartService.findById(id);
@@ -130,6 +153,4 @@ public class CartController {
         model.addAttribute("cart",allProducts);
         return "new_cart";
     }
-
-
 }

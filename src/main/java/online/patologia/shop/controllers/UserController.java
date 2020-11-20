@@ -2,6 +2,7 @@ package online.patologia.shop.controllers;
 
 import online.patologia.shop.model.MyUser;
 import online.patologia.shop.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,9 +21,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    final static Logger logger = Logger.getLogger(UserController.class);
 
     @RequestMapping("/user/new")
     public String showNewUserForm(Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start showNewUserForm.");
+        }
+
         MyUser myUser = new MyUser();
         model.addAttribute("user", myUser);
         return "register";
@@ -30,6 +36,10 @@ public class UserController {
 
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)
     public String saveProduct(@ModelAttribute("user") @Valid MyUser myUser, BindingResult bindingResult, Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start saveProduct.");
+        }
+
         myUser.setUsername(myUser.getUsername().trim());
         myUser.setPassword(myUser.getPassword().trim());
         myUser.setPasswordMatcher(myUser.getPasswordMatcher().trim());
@@ -54,17 +64,29 @@ public class UserController {
 
     @RequestMapping("/login.html")
     public String login() {
+        if(logger.isDebugEnabled()){
+            logger.debug("start login.");
+        }
+
         return "login";
     }
 
     @RequestMapping("/login-error.html")
     public String loginError(Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start loginError.");
+        }
+
         model.addAttribute("loginError", true);
         return "login";
     }
 
     @Bean
     private PasswordEncoder passwordEncoder() {
+        if(logger.isDebugEnabled()){
+            logger.debug("start passwordEncoder.");
+        }
+
         return new BCryptPasswordEncoder();
     }
 }

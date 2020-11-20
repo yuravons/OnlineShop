@@ -24,8 +24,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Головна<span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Головна</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Кошик</a>
@@ -47,49 +47,34 @@
                     <a class="nav-link" href="/logout">Вийти</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/search}" method="post" th:object="${product}">
-                <select th:field="*{category}" onchange="this.form.submit()" class="form-control">
-                    <option th:value="ALL">УСЕ</option>
-                    <option th:value="'PHONE'" th:text="PHONE">Телефони</option>
-                    <option th:value="'LAPTOP'" th:text="LAPTOP">Комп'ютери</option>
-                </select>
-            </form>
         </div>
     </nav>
 
 
 
-    <div class="card">
-        <a th:href="@{/product/new}">Додати новий продукт</a>
-        <a style="float:right" th:href="@{/panel/orders}">Див. замовлення</a>
-        <a style="float:right" th:href="@{/providers}">Постачальники</a>
-        <h2 style="color:green" th:if="${finalizeDone}==true"> Ви успішно виконали замовлення</h2>
-
-        <div class="card-block">
+    <div class="providers_card">
+        <div class="providers_card_block">
             <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>Зображення</th>
-                    <th>Продукт</th>
                     <th>Назва</th>
-                    <th>Ціна</th>
-                    <th>Кількість</th>
-                    <th>Дії</th>
+                    <th>Регіон</th>
+                    <th>Оплата</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${products}" th:onclick="'javascript:location.href=\'' + @{'/product/' + ${product.id}} + '\''">
-                    <td> <img th:src="${product.imageSource}" style="height:100px;max-width:100px;width: expression(this.width > 500 ? 500: true);"></td>
-                    <td th:text="${product.producer}">Продукт</td>
-                    <td th:text="${product.name}">Назва</td>
-                    <td th:text="${product.price}">Ціна</td>
-                    <td th:text="${product.stock}">Доступна кількість</td>
+                <tr th:each="provider : ${providers}" th:onclick="'javascript:location.href=\'' + @{'/provider/' + ${provider.id}} + '\''">
+                    <td> <img th:src="${provider.imageSource}" style="height:100px;max-width:100px;width: expression(this.width > 500 ? 500: true);"></td>
+                    <td th:text="${provider.name}">Назва</td>
+                    <td th:text="${provider.region}">Регіон</td>
+                    <td th:text="${provider.price}">Оплата</td>
                     <td>
-                        <a th:href="@{'/product/edit/' + ${product.id}}">Редагування</a>
+                        <a th:href="@{'/provider/edit/' + ${provider.id}}">Редагування</a>
                         &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{'/product/delete/' + ${product.id}}">Видалення</a>
+                        <a th:href="@{'/provider/delete/' + ${provider.id}}">Видалення</a>
                         &nbsp;&nbsp;&nbsp;
-                        <a th:href="@{'/product/' + ${product.id}}">Дивитись</a>
+                        <a th:href="@{'/provider/' + ${provider.id}}">Дивитись</a>
                     </td>
                 </tr>
                 </tbody>

@@ -4,6 +4,7 @@ import online.patologia.shop.model.Order;
 import online.patologia.shop.model.Product;
 import online.patologia.shop.service.OrderService;
 import online.patologia.shop.service.ProductService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,14 @@ public class PanelController {
     @Autowired
     private OrderService orderService;
 
+    final static Logger logger = Logger.getLogger(PanelController.class);
+
     @GetMapping("/panel/order/send/{id}")
     public String orderSend(@PathVariable("id") Long id,  Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start orderSend.");
+        }
+
         Order order = orderService.getOne(id);
         if(order.isSend()) {
             order.setSend(false);
@@ -37,6 +44,10 @@ public class PanelController {
 
     @GetMapping("/panel")
     public String getAllProducts(Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start getAllProducts.");
+        }
+
         model.addAttribute("product",new Product());
         List<Product> products = new ArrayList<>();
         productService.findAll().forEach(product -> products.add(product));
@@ -46,6 +57,10 @@ public class PanelController {
 
     @GetMapping("/panel/orders")
     public String getOrders(Model model) {
+        if(logger.isDebugEnabled()){
+            logger.debug("start getOrders.");
+        }
+
         List<Order> orders = new ArrayList<>();
         orderService.findAll().forEach(order -> orders.add(order));
         model.addAttribute("orders",orders);
